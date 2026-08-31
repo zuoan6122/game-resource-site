@@ -117,16 +117,35 @@ function getScoreEmoji(score) {
 }
 
 // ==================== 从JSON加载数据 ====================
-async function loadGamesFromJSON() {
+// 数据版本号：games.json 更新后需 +1，以刷新 jsDelivr 与浏览器缓存
+const GAMES_DATA_VERSION = 1;
+const GAMES_DATA_URLS = [
+    `https://cdn.jsdelivr.net/gh/wang6122635/game-resource-site@master/data/games.json?v=${GAMES_DATA_VERSION}`,
+    `data/games.json?v=${GAMES_DATA_VERSION}`
+];
+
+async function fetchWithTimeout(url, ms = 8000) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), ms);
     try {
-        const response = await fetch(`data/games.json?t=${Date.now()}`);
-        if (!response.ok) throw new Error('网络请求失败');
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('加载游戏数据失败:', error);
-        return [];
+        const response = await fetch(url, { signal: controller.signal });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        return await response.json();
+    } finally {
+        clearTimeout(timer);
     }
+}
+
+async function loadGamesFromJSON() {
+    for (const url of GAMES_DATA_URLS) {
+        try {
+            return await fetchWithTimeout(url);
+        } catch (error) {
+            console.warn('数据源加载失败，尝试备用:', url, error);
+        }
+    }
+    console.error('所有数据源均加载失败');
+    return [];
 }
 
 // ==================== 获取过滤后的游戏 ====================
