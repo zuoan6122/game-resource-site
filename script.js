@@ -1,6 +1,15 @@
 // ==================== 热门游戏 Worker ====================
 const HOT_GAMES_API = 'https://game-click-counter.wang739749615.workers.dev';
 
+// ==================== 百度统计事件上报（转化分析） ====================
+function trackEvent(category, action, label, value) {
+    if (typeof _hmt !== 'undefined' && _hmt.push) {
+        try {
+            _hmt.push(['_trackEvent', category, action, label, value]);
+        } catch (e) {}
+    }
+}
+
 // ==================== 状态管理 ====================
 let gamesData = [];
 let dropdownPlatform = 'all';
@@ -655,6 +664,7 @@ function openGameModal(game) {
     content.querySelectorAll('.modal-emulator-item:not(.modal-pc-toggle)').forEach(link => {
         link.addEventListener('click', () => {
             fetch(`${HOT_GAMES_API}/download?game=${encodeURIComponent(game.title)}`, { method: 'POST' }).catch(() => {});
+            trackEvent('下载', '点击网盘链接', game.title);
         });
     });
 
@@ -685,6 +695,7 @@ function openGameModal(game) {
                         }
                     }, 300);
                     fetch(`${HOT_GAMES_API}/download?game=${encodeURIComponent(game.title)}`, { method: 'POST' }).catch(() => {});
+                    trackEvent('下载', '展开二维码', game.title);
                 } else {
                     downloadSection.style.display = 'none';
                     if (arrowIcon) arrowIcon.style.transform = 'rotate(0)';
@@ -837,6 +848,14 @@ function bindEvents() {
     if (homeBtn) {
         homeBtn.addEventListener('click', () => location.reload());
     }
+
+    // 游戏必备软件/模拟器分类网盘链接 - 转化统计
+    document.querySelectorAll('.emulator-item').forEach(link => {
+        link.addEventListener('click', () => {
+            const name = link.querySelector('.emulator-name');
+            trackEvent('下载', '点击网盘链接', name ? name.textContent.trim() : '');
+        });
+    });
 
     // 平台子标签
     document.querySelectorAll('.platform-tab').forEach(tab => {
