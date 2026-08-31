@@ -118,12 +118,12 @@ function getScoreEmoji(score) {
     return '😞';
 }
 
-// ==================== 从JSON加载数据 ====================
+// ==================== 从数据源加载游戏 ====================
 // 数据版本号：games.json 更新后需 +1，以刷新 jsDelivr 与浏览器缓存
 const GAMES_DATA_VERSION = 1;
 const GAMES_DATA_URLS = [
-    `https://cdn.jsdelivr.net/gh/wang6122635/game-resource-site@master/data/games.json?v=${GAMES_DATA_VERSION}`,
-    `data/games.json?v=${GAMES_DATA_VERSION}`
+    `data/games.json?v=${GAMES_DATA_VERSION}`,
+    `https://cdn.jsdelivr.net/gh/wang6122635/game-resource-site@master/data/games.json?v=${GAMES_DATA_VERSION}`
 ];
 
 async function fetchWithTimeout(url, ms = 8000) {
@@ -139,6 +139,11 @@ async function fetchWithTimeout(url, ms = 8000) {
 }
 
 async function loadGamesFromJSON() {
+    // 优先使用 Gitee 上的 games-data.js（<script> 标签加载，绕过 CORS，国内秒开）
+    if (window.GAMES_DATA && Array.isArray(window.GAMES_DATA) && window.GAMES_DATA.length > 0) {
+        return window.GAMES_DATA;
+    }
+    // 回退：本地 JSON（GitHub Pages 同源可访问，速度较慢）
     for (const url of GAMES_DATA_URLS) {
         try {
             return await fetchWithTimeout(url);
