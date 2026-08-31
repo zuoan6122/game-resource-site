@@ -1,4 +1,6 @@
-// ==================== 热门游戏 Worker ====================
+// ==================== 云端统计开关 ====================
+// workers.dev 接口国内不可达，先关闭；接入腾讯云后改为 true 并更新 HOT_GAMES_API
+const ENABLE_CLOUD_STATS = false;
 const HOT_GAMES_API = 'https://game-click-counter.wang739749615.workers.dev';
 
 // ==================== 百度统计事件上报（转化分析） ====================
@@ -573,8 +575,8 @@ function openGameModal(game) {
     const content = document.getElementById('gameModalContent');
     if (!overlay || !content) return;
 
-    // 上报点击量到 Cloudflare Worker（同一浏览器每个游戏只计一次）
-    if (shouldCountClick(game.title)) {
+    // 上报点击量到云端统计（同一浏览器每个游戏只计一次）
+    if (ENABLE_CLOUD_STATS && shouldCountClick(game.title)) {
         fetch(`${HOT_GAMES_API}/click?game=${encodeURIComponent(game.title)}`, { method: 'POST' }).catch(() => {});
     }
 
@@ -715,7 +717,7 @@ function openGameModal(game) {
     // 绑定夸克网盘跳转链接点击：上报下载量（PC为展开交互，单独处理）
     content.querySelectorAll('.modal-emulator-item:not(.modal-pc-toggle)').forEach(link => {
         link.addEventListener('click', () => {
-            if (shouldCountDownload(game.title)) {
+            if (ENABLE_CLOUD_STATS && shouldCountDownload(game.title)) {
                 fetch(`${HOT_GAMES_API}/download?game=${encodeURIComponent(game.title)}`, { method: 'POST' }).catch(() => {});
             }
             trackEvent('下载', '点击网盘链接', game.title);
@@ -748,7 +750,7 @@ function openGameModal(game) {
                             contentEl.classList.add('fade-in');
                         }
                     }, 300);
-                    if (shouldCountDownload(game.title)) {
+                    if (ENABLE_CLOUD_STATS && shouldCountDownload(game.title)) {
                         fetch(`${HOT_GAMES_API}/download?game=${encodeURIComponent(game.title)}`, { method: 'POST' }).catch(() => {});
                     }
                     trackEvent('下载', '展开二维码', game.title);
@@ -1151,8 +1153,17 @@ async function init() {
     showSlide(0);
     toggleBackToTop();
 
-    // 加载热门游戏（不阻塞页面）
-    loadHotGames();
+    // 加载热门游戏（不阻塞页面，云端统计关闭时跳过）
+    if (ENABLE_CLOUD_STATS) {
+        loadHotGames();
+    }
+
+    // 云端统计关闭时隐藏热度/下载量排序按钮
+    if (!ENABLE_CLOUD_STATS) {
+        document.querySelectorAll('.sort-tab[data-sort="hot"], .sort-tab[data-sort="downloads"]').forEach(btn => {
+            btn.style.display = 'none';
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', init);
