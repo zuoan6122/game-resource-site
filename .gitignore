@@ -1,0 +1,16 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# 大型原始数据（站点不需要，49MB）
+data/HK.zh.json
+
+# 备份
+backup-*/
+
+# Wrangler 本地配置
+.wrangler-config/
+
+# 调试输出
+hk_search*.txt
+ns_match_report.txt

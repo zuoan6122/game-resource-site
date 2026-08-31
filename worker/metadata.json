@@ -1,0 +1,10 @@
+{
+  "main_module": "game-click-counter.js",
+  "bindings": [
+    {
+      "type": "kv_namespace",
+      "name": "GAME_CLICKS",
+      "namespace_id": "7cc749b3e5154629b4db5d70abb341c1"
+    }
+  ]
+}
