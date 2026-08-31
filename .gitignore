@@ -14,3 +14,4 @@ backup-*/
 # 调试输出
 hk_search*.txt
 ns_match_report.txt
+debug.log

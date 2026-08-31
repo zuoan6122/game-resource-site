@@ -10,6 +10,37 @@ function trackEvent(category, action, label, value) {
     }
 }
 
+// ==================== 浏览器去重（同一浏览器每个游戏只计一次） ====================
+function getLocalSet(key) {
+    try {
+        return new Set(JSON.parse(localStorage.getItem(key) || '[]'));
+    } catch (e) {
+        return new Set();
+    }
+}
+
+function saveLocalSet(key, set) {
+    try {
+        localStorage.setItem(key, JSON.stringify(Array.from(set)));
+    } catch (e) {}
+}
+
+function shouldCountClick(gameTitle) {
+    const set = getLocalSet('clickedGames');
+    if (set.has(gameTitle)) return false;
+    set.add(gameTitle);
+    saveLocalSet('clickedGames', set);
+    return true;
+}
+
+function shouldCountDownload(gameTitle) {
+    const set = getLocalSet('downloadedGames');
+    if (set.has(gameTitle)) return false;
+    set.add(gameTitle);
+    saveLocalSet('downloadedGames', set);
+    return true;
+}
+
 // ==================== 状态管理 ====================
 let gamesData = [];
 let dropdownPlatform = 'all';
@@ -523,8 +554,10 @@ function openGameModal(game) {
     const content = document.getElementById('gameModalContent');
     if (!overlay || !content) return;
 
-    // 上报点击量到 Cloudflare Worker（fire and forget）
-    fetch(`${HOT_GAMES_API}/click?game=${encodeURIComponent(game.title)}`, { method: 'POST' }).catch(() => {});
+    // 上报点击量到 Cloudflare Worker（同一浏览器每个游戏只计一次）
+    if (shouldCountClick(game.title)) {
+        fetch(`${HOT_GAMES_API}/click?game=${encodeURIComponent(game.title)}`, { method: 'POST' }).catch(() => {});
+    }
 
     const scoreDesc = game.reviewScore != null
         ? (reviewScoreMap[game.reviewScoreDesc] || game.reviewScoreDesc || '')
@@ -663,7 +696,9 @@ function openGameModal(game) {
     // 绑定夸克网盘跳转链接点击：上报下载量（PC为展开交互，单独处理）
     content.querySelectorAll('.modal-emulator-item:not(.modal-pc-toggle)').forEach(link => {
         link.addEventListener('click', () => {
-            fetch(`${HOT_GAMES_API}/download?game=${encodeURIComponent(game.title)}`, { method: 'POST' }).catch(() => {});
+            if (shouldCountDownload(game.title)) {
+                fetch(`${HOT_GAMES_API}/download?game=${encodeURIComponent(game.title)}`, { method: 'POST' }).catch(() => {});
+            }
             trackEvent('下载', '点击网盘链接', game.title);
         });
     });
@@ -694,7 +729,9 @@ function openGameModal(game) {
                             contentEl.classList.add('fade-in');
                         }
                     }, 300);
-                    fetch(`${HOT_GAMES_API}/download?game=${encodeURIComponent(game.title)}`, { method: 'POST' }).catch(() => {});
+                    if (shouldCountDownload(game.title)) {
+                        fetch(`${HOT_GAMES_API}/download?game=${encodeURIComponent(game.title)}`, { method: 'POST' }).catch(() => {});
+                    }
                     trackEvent('下载', '展开二维码', game.title);
                 } else {
                     downloadSection.style.display = 'none';
@@ -1062,7 +1099,6 @@ function renderHotGamesDropdown(hotList) {
             <span class="${rankClass}">${i + 1}</span>
             ${platformBadgeHtml(platform)}
             <span class="hot-game-name" title="${item.name}">${item.name}</span>
-            <span class="hot-game-count">${item.count} 次点击</span>
         </a>`;
     }).join('');
 }

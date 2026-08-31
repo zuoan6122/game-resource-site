@@ -1662,16 +1662,6 @@ body {
     white-space: nowrap;
 }
 
-.hot-game-count {
-    font-size: 11px;
-    color: var(--text-muted);
-    flex-shrink: 0;
-}
-
-.hot-game-item:hover .hot-game-count {
-    color: var(--accent-color);
-}
-
 .no-results::before {
     content: "📭";
     display: block;
