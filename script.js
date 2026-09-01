@@ -1,7 +1,7 @@
 // ==================== 云端统计开关 ====================
-// workers.dev 接口国内不可达，先关闭；接入腾讯云后改为 true 并更新 HOT_GAMES_API
-const ENABLE_CLOUD_STATS = false;
-const HOT_GAMES_API = 'https://game-click-counter.wang739749615.workers.dev';
+// 腾讯云 CloudBase 云函数（HTTP 网关），国内可达
+const ENABLE_CLOUD_STATS = true;
+const HOT_GAMES_API = 'https://game-counter-d3gk5xyxj456b476d-1478718251.ap-shanghai.app.tcloudbase.com';
 
 // ==================== 百度统计事件上报（转化分析） ====================
 function trackEvent(category, action, label, value) {
