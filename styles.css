@@ -142,34 +142,17 @@ body {
     display: flex;
     align-items: center;
     color: var(--accent-color);
-    animation: logoSway 3s ease-in-out infinite;
+}
+
+.logo-img {
+    height: 36px;
+    width: auto;
+    display: block;
     transition: transform 0.3s ease;
 }
 
-.logo-icon:hover {
-    animation: logoFloatUp 0.6s ease-in-out;
-    transform: scale(1.1);
-}
-
-@keyframes logoSway {
-    0%, 100% {
-        transform: rotate(-8deg);
-    }
-    50% {
-        transform: rotate(8deg);
-    }
-}
-
-@keyframes logoFloatUp {
-    0% {
-        transform: translateY(0) scale(1);
-    }
-    50% {
-        transform: translateY(-4px) scale(1.1);
-    }
-    100% {
-        transform: translateY(0) scale(1.1);
-    }
+.logo-img:hover {
+    transform: scale(1.08);
 }
 
 .logo h1 {
