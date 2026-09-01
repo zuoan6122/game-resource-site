@@ -139,11 +139,26 @@ async function fetchWithTimeout(url, ms = 8000) {
 }
 
 async function loadGamesFromJSON() {
-    // 优先使用 Gitee 上的 games-data.js（<script> 标签加载，绕过 CORS，国内秒开）
+    // 优先使用 jsDelivr 加载的 games-data.js（<script> 标签加载，绕过 CORS）
     if (window.GAMES_DATA && Array.isArray(window.GAMES_DATA) && window.GAMES_DATA.length > 0) {
         return window.GAMES_DATA;
     }
-    // 回退：本地 JSON（GitHub Pages 同源可访问，速度较慢）
+    // 备用 CDN 节点（gcore），动态加载并等待完成
+    try {
+        await new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'https://gcore.jsdelivr.net/gh/wang6122635/game-resource-site@master/games-data.js';
+            s.onload = resolve;
+            s.onerror = reject;
+            document.head.appendChild(s);
+        });
+        if (window.GAMES_DATA && Array.isArray(window.GAMES_DATA) && window.GAMES_DATA.length > 0) {
+            return window.GAMES_DATA;
+        }
+    } catch (error) {
+        console.warn('备用CDN节点加载失败，尝试本地JSON', error);
+    }
+    // 回退：本地 JSON（GitHub Pages 同源，速度较慢）
     for (const url of GAMES_DATA_URLS) {
         try {
             return await fetchWithTimeout(url);
