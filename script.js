@@ -554,23 +554,14 @@ function scrollToTop() {
 // ==================== 轮播图功能 ====================
 let currentSlide = 0;
 let slides = [];
-let indicators = [];
 
 function showSlide(index) {
     slides.forEach(slide => slide.classList.remove('active'));
-    indicators.forEach(indicator => indicator.classList.remove('active'));
     slides[index].classList.add('active');
-    indicators[index].classList.add('active');
 }
 
 function nextSlide() {
     currentSlide = (currentSlide + 1) % slides.length;
-    showSlide(currentSlide);
-}
-
-function handleIndicatorClick(e) {
-    const index = parseInt(e.target.dataset.slide);
-    currentSlide = index;
     showSlide(currentSlide);
 }
 
@@ -1066,11 +1057,6 @@ function bindEvents() {
         });
     }
 
-    // 轮播图指示器
-    indicators.forEach(indicator => {
-        indicator.addEventListener('click', handleIndicatorClick);
-    });
-
     // 自动轮播
     setInterval(nextSlide, 5000);
 }
@@ -1163,7 +1149,6 @@ async function init() {
 
     // 初始化轮播元素
     slides = document.querySelectorAll('.carousel-slide');
-    indicators = document.querySelectorAll('.indicator');
 
     // 绑定事件
     bindEvents();
@@ -1184,6 +1169,231 @@ async function init() {
             btn.style.display = 'none';
         });
     }
+
+    // 初始化留言板
+    initMessageBoard();
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+// ==================== 留言板 ====================
+const MSG_API = ENABLE_CLOUD_STATS ? HOT_GAMES_API : '';
+
+// 敏感词过滤
+const BAD_WORDS = ['操', 'fuck', 'shit', 'sb', '傻逼', '草泥马', '鸡巴', '妈的', '狗日', '去死', '王八蛋', '屁眼', '婊子', ' whore', 'dick', 'asshole', 'bastard', 'crap', ' damn'];
+function filterProfanity(text) {
+    let result = text;
+    BAD_WORDS.forEach(word => {
+        const re = new RegExp(word, 'gi');
+        result = result.replace(re, '**');
+    });
+    return result;
+}
+
+function initMessageBoard() {
+    const board = document.getElementById('messageBoard');
+    const tab = document.getElementById('msgBoardTab');
+    const closeBtn = document.getElementById('msgBoardClose');
+    const textarea = document.getElementById('msgBoardContent');
+    const countEl = document.getElementById('msgBoardCount');
+    const submitBtn = document.getElementById('msgBoardSubmit');
+    const listEl = document.getElementById('messageList');
+    const hint = document.getElementById('msgHint');
+
+    // 提示气泡：页面加载自动闪烁 3s 后隐藏；悬停显示（不闪烁），移开隐藏
+    let hintTimer;
+    function showHint(blink) {
+        clearTimeout(hintTimer);
+        hint.classList.add('show');
+        hint.classList.toggle('blink', !!blink);
+    }
+    function hideHint() {
+        clearTimeout(hintTimer);
+        hint.classList.remove('show', 'blink');
+    }
+    showHint(true);
+    hintTimer = setTimeout(hideHint, 3000);
+    tab.addEventListener('mouseenter', () => showHint(false));
+    tab.addEventListener('mouseleave', hideHint);
+
+    // 展开
+    tab.addEventListener('click', () => {
+        board.classList.remove('collapsed');
+        loadMessages();
+    });
+
+    // 收起
+    closeBtn.addEventListener('click', () => {
+        board.classList.add('collapsed');
+    });
+
+    // 点击空白处关闭
+    document.addEventListener('click', (e) => {
+        if (!board.contains(e.target)) {
+            board.classList.add('collapsed');
+        }
+    });
+
+    // 字数计数
+    textarea.addEventListener('input', () => {
+        const len = textarea.value.length;
+        countEl.textContent = len + '/50';
+        countEl.style.color = len >= 45 ? '#e85d04' : '';
+    });
+
+    // 提交留言
+    submitBtn.addEventListener('click', () => {
+        const content = textarea.value.trim();
+        if (!content) return;
+        if (content.length > 50) return;
+
+        // 频率限制：每分钟一条
+        const lastSend = parseInt(localStorage.getItem('msgLastSend') || '0');
+        const now = Date.now();
+        if (now - lastSend < 60000) {
+            const wait = Math.ceil((60000 - (now - lastSend)) / 1000);
+            submitBtn.textContent = '请等' + wait + '秒';
+            submitBtn.disabled = true;
+            const timer = setInterval(() => {
+                const remain = Math.ceil((60000 - (Date.now() - lastSend)) / 1000);
+                if (remain <= 0) {
+                    clearInterval(timer);
+                    submitBtn.textContent = '发送';
+                    submitBtn.disabled = false;
+                } else {
+                    submitBtn.textContent = '请等' + remain + '秒';
+                }
+            }, 1000);
+            return;
+        }
+
+        const name = '匿名用户';
+        const filtered = filterProfanity(content);
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = '发送中...';
+
+        if (MSG_API) {
+            fetch(MSG_API + '/messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, content: filtered })
+            }).then(r => r.json()).then(data => {
+                if (data.code === 0) {
+                    localStorage.setItem('msgLastSend', Date.now().toString());
+                    textarea.value = '';
+                    countEl.textContent = '0/50';
+                    loadMessages();
+                    // 刷新按钮
+                    startRateLimitCountdown();
+                } else {
+                    alert(data.message || '发送失败');
+                }
+            }).catch(err => {
+                alert('网络错误，请稍后重试');
+            }).finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '发送';
+            });
+        } else {
+            // 无后端时的本地演示
+            const msg = {
+                name: name,
+                content: filtered,
+                time: new Date().toISOString()
+            };
+            let localMsgs = JSON.parse(localStorage.getItem('localMessages') || '[]');
+            localMsgs.unshift(msg);
+            localMsgs = localMsgs.slice(0, 50);
+            localStorage.setItem('localMessages', JSON.stringify(localMsgs));
+            localStorage.setItem('msgLastSend', Date.now().toString());
+            textarea.value = '';
+            countEl.textContent = '0/50';
+            renderMessages(localMsgs);
+            startRateLimitCountdown();
+            submitBtn.disabled = false;
+            submitBtn.textContent = '发送';
+        }
+    });
+
+    // 频率限制倒计时
+    function startRateLimitCountdown() {
+        const lastSend = parseInt(localStorage.getItem('msgLastSend') || '0');
+        const elapsed = Date.now() - lastSend;
+        if (elapsed < 60000) {
+            const remain = Math.ceil((60000 - elapsed) / 1000);
+            submitBtn.textContent = '请等' + remain + '秒';
+            submitBtn.disabled = true;
+            const timer = setInterval(() => {
+                const r = Math.ceil((60000 - (Date.now() - lastSend)) / 1000);
+                if (r <= 0) {
+                    clearInterval(timer);
+                    submitBtn.textContent = '发送';
+                    submitBtn.disabled = false;
+                } else {
+                    submitBtn.textContent = '请等' + r + '秒';
+                }
+            }, 1000);
+        }
+    }
+
+    // 加载留言
+    function loadMessages() {
+        if (MSG_API) {
+            listEl.innerHTML = '<div style="text-align:center;color:var(--text-tertiary);padding:16px 0;font-size:13px;">加载中...</div>';
+            fetch(MSG_API + '/messages?limit=20')
+                .then(r => r.json())
+                .then(data => {
+                    if (data.code === 0) {
+                        renderMessages(data.data || []);
+                    } else {
+                        listEl.innerHTML = '<div style="text-align:center;color:var(--text-tertiary);padding:16px 0;font-size:13px;">加载失败</div>';
+                    }
+                })
+                .catch(() => {
+                    listEl.innerHTML = '<div style="text-align:center;color:var(--text-tertiary);padding:16px 0;font-size:13px;">加载失败</div>';
+                });
+        } else {
+            const localMsgs = JSON.parse(localStorage.getItem('localMessages') || '[]');
+            renderMessages(localMsgs);
+        }
+    }
+
+    // 渲染留言列表
+    function renderMessages(messages) {
+        if (!messages || messages.length === 0) {
+            listEl.innerHTML = '';
+            return;
+        }
+        listEl.innerHTML = messages.map(msg => {
+            const time = formatMsgTime(msg.time);
+            return '<div class="msg-item">' +
+                '<div class="msg-item-head">' +
+                '<span class="msg-item-name">' + escapeHtml(msg.name) + '</span>' +
+                '<span class="msg-item-time">' + time + '</span>' +
+                '</div>' +
+                '<div class="msg-item-content">' + escapeHtml(msg.content) + '</div>' +
+                '</div>';
+        }).join('');
+    }
+
+    function formatMsgTime(iso) {
+        const d = new Date(iso);
+        const now = new Date();
+        const diff = (now - d) / 1000;
+        if (diff < 60) return '刚刚';
+        if (diff < 3600) return Math.floor(diff / 60) + '分钟前';
+        if (diff < 86400) return Math.floor(diff / 3600) + '小时前';
+        if (diff < 2592000) return Math.floor(diff / 86400) + '天前';
+        return (d.getMonth() + 1) + '月' + d.getDate() + '日';
+    }
+
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    // 页面加载时检查频率限制
+    startRateLimitCountdown();
+}
