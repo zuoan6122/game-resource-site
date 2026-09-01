@@ -1197,7 +1197,6 @@ function initMessageBoard() {
     const textarea = document.getElementById('msgBoardContent');
     const countEl = document.getElementById('msgBoardCount');
     const submitBtn = document.getElementById('msgBoardSubmit');
-    const listEl = document.getElementById('messageList');
     const hint = document.getElementById('msgHint');
 
     // 提示气泡：页面加载自动闪烁 3s 后隐藏；悬停显示（不闪烁），移开隐藏
@@ -1219,7 +1218,6 @@ function initMessageBoard() {
     // 展开
     tab.addEventListener('click', () => {
         board.classList.remove('collapsed');
-        loadMessages();
     });
 
     // 收起
@@ -1247,23 +1245,19 @@ function initMessageBoard() {
         if (!content) return;
         if (content.length > 50) return;
 
-        // 频率限制：每分钟一条
+        // 频率限制：每30秒一条
         const lastSend = parseInt(localStorage.getItem('msgLastSend') || '0');
         const now = Date.now();
-        if (now - lastSend < 60000) {
-            const wait = Math.ceil((60000 - (now - lastSend)) / 1000);
-            submitBtn.textContent = '请等' + wait + '秒';
+        if (now - lastSend < 30000) {
+            submitBtn.textContent = '留言成功，30秒后可继续留言';
             submitBtn.disabled = true;
             const timer = setInterval(() => {
-                const remain = Math.ceil((60000 - (Date.now() - lastSend)) / 1000);
-                if (remain <= 0) {
+                if (Date.now() - lastSend >= 30000) {
                     clearInterval(timer);
                     submitBtn.textContent = '发送';
                     submitBtn.disabled = false;
-                } else {
-                    submitBtn.textContent = '请等' + remain + '秒';
                 }
-            }, 1000);
+            }, 500);
             return;
         }
 
@@ -1283,15 +1277,15 @@ function initMessageBoard() {
                     localStorage.setItem('msgLastSend', Date.now().toString());
                     textarea.value = '';
                     countEl.textContent = '0/50';
-                    loadMessages();
-                    // 刷新按钮
+                    submitBtn.textContent = '留言成功，30秒后可继续留言';
                     startRateLimitCountdown();
                 } else {
                     alert(data.message || '发送失败');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '发送';
                 }
             }).catch(err => {
                 alert('网络错误，请稍后重试');
-            }).finally(() => {
                 submitBtn.disabled = false;
                 submitBtn.textContent = '发送';
             });
@@ -1309,89 +1303,26 @@ function initMessageBoard() {
             localStorage.setItem('msgLastSend', Date.now().toString());
             textarea.value = '';
             countEl.textContent = '0/50';
-            renderMessages(localMsgs);
+            submitBtn.textContent = '留言成功，30秒后可继续留言';
             startRateLimitCountdown();
-            submitBtn.disabled = false;
-            submitBtn.textContent = '发送';
         }
     });
 
-    // 频率限制倒计时
+    // 频率限制：冷却期间按钮显示留言成功提示，30秒后恢复
     function startRateLimitCountdown() {
         const lastSend = parseInt(localStorage.getItem('msgLastSend') || '0');
         const elapsed = Date.now() - lastSend;
-        if (elapsed < 60000) {
-            const remain = Math.ceil((60000 - elapsed) / 1000);
-            submitBtn.textContent = '请等' + remain + '秒';
+        if (elapsed < 30000) {
+            submitBtn.textContent = '留言成功，30秒后可继续留言';
             submitBtn.disabled = true;
             const timer = setInterval(() => {
-                const r = Math.ceil((60000 - (Date.now() - lastSend)) / 1000);
-                if (r <= 0) {
+                if (Date.now() - lastSend >= 30000) {
                     clearInterval(timer);
                     submitBtn.textContent = '发送';
                     submitBtn.disabled = false;
-                } else {
-                    submitBtn.textContent = '请等' + r + '秒';
                 }
-            }, 1000);
+            }, 500);
         }
-    }
-
-    // 加载留言
-    function loadMessages() {
-        if (MSG_API) {
-            listEl.innerHTML = '<div style="text-align:center;color:var(--text-tertiary);padding:16px 0;font-size:13px;">加载中...</div>';
-            fetch(MSG_API + '/messages?limit=20')
-                .then(r => r.json())
-                .then(data => {
-                    if (data.code === 0) {
-                        renderMessages(data.data || []);
-                    } else {
-                        listEl.innerHTML = '<div style="text-align:center;color:var(--text-tertiary);padding:16px 0;font-size:13px;">加载失败</div>';
-                    }
-                })
-                .catch(() => {
-                    listEl.innerHTML = '<div style="text-align:center;color:var(--text-tertiary);padding:16px 0;font-size:13px;">加载失败</div>';
-                });
-        } else {
-            const localMsgs = JSON.parse(localStorage.getItem('localMessages') || '[]');
-            renderMessages(localMsgs);
-        }
-    }
-
-    // 渲染留言列表
-    function renderMessages(messages) {
-        if (!messages || messages.length === 0) {
-            listEl.innerHTML = '';
-            return;
-        }
-        listEl.innerHTML = messages.map(msg => {
-            const time = formatMsgTime(msg.time);
-            return '<div class="msg-item">' +
-                '<div class="msg-item-head">' +
-                '<span class="msg-item-name">' + escapeHtml(msg.name) + '</span>' +
-                '<span class="msg-item-time">' + time + '</span>' +
-                '</div>' +
-                '<div class="msg-item-content">' + escapeHtml(msg.content) + '</div>' +
-                '</div>';
-        }).join('');
-    }
-
-    function formatMsgTime(iso) {
-        const d = new Date(iso);
-        const now = new Date();
-        const diff = (now - d) / 1000;
-        if (diff < 60) return '刚刚';
-        if (diff < 3600) return Math.floor(diff / 60) + '分钟前';
-        if (diff < 86400) return Math.floor(diff / 3600) + '小时前';
-        if (diff < 2592000) return Math.floor(diff / 86400) + '天前';
-        return (d.getMonth() + 1) + '月' + d.getDate() + '日';
-    }
-
-    function escapeHtml(str) {
-        const div = document.createElement('div');
-        div.textContent = str;
-        return div.innerHTML;
     }
 
     // 页面加载时检查频率限制

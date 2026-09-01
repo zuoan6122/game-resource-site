@@ -1082,56 +1082,6 @@ body {
     transform: none;
 }
 
-.msg-list {
-    flex: 1;
-    overflow-y: auto;
-    max-height: 280px;
-    padding: 0 18px 14px;
-}
-
-.msg-list:empty::after {
-    content: '暂无留言，快来抢沙发~';
-    display: block;
-    text-align: center;
-    color: var(--text-tertiary);
-    font-size: 13px;
-    padding: 16px 0;
-}
-
-.msg-item {
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.msg-item:last-child {
-    border-bottom: none;
-}
-
-.msg-item-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 4px;
-}
-
-.msg-item-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent-color);
-}
-
-.msg-item-time {
-    font-size: 11px;
-    color: var(--text-tertiary);
-}
-
-.msg-item-content {
-    font-size: 14px;
-    color: var(--text-primary);
-    line-height: 1.5;
-    word-break: break-word;
-}
-
 /* ==================== 游戏详情弹窗 ==================== */
 .game-modal-overlay {
     position: fixed;
