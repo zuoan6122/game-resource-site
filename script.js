@@ -123,7 +123,7 @@ function getScoreEmoji(score) {
 const GAMES_DATA_VERSION = 1;
 const GAMES_DATA_URLS = [
     `data/games.json?v=${GAMES_DATA_VERSION}`,
-    `https://cdn.jsdelivr.net/gh/wang6122635/game-resource-site@master/data/games.json?v=${GAMES_DATA_VERSION}`
+    `https://cdn.jsdelivr.net/gh/zuoan6122/game-resource-site@master/data/games.json?v=${GAMES_DATA_VERSION}`
 ];
 
 async function fetchWithTimeout(url, ms = 8000) {
@@ -147,7 +147,7 @@ async function loadGamesFromJSON() {
     try {
         await new Promise((resolve, reject) => {
             const s = document.createElement('script');
-            s.src = 'https://gcore.jsdelivr.net/gh/wang6122635/game-resource-site@master/games-data.js';
+            s.src = 'https://gcore.jsdelivr.net/gh/zuoan6122/game-resource-site@master/games-data.js';
             s.onload = resolve;
             s.onerror = reject;
             document.head.appendChild(s);
