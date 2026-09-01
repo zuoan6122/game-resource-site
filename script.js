@@ -1249,15 +1249,7 @@ function initMessageBoard() {
         const lastSend = parseInt(localStorage.getItem('msgLastSend') || '0');
         const now = Date.now();
         if (now - lastSend < 30000) {
-            submitBtn.textContent = '留言成功，30秒后可继续留言';
-            submitBtn.disabled = true;
-            const timer = setInterval(() => {
-                if (Date.now() - lastSend >= 30000) {
-                    clearInterval(timer);
-                    submitBtn.textContent = '发送';
-                    submitBtn.disabled = false;
-                }
-            }, 500);
+            startRateLimitCountdown();
             return;
         }
 
@@ -1277,7 +1269,6 @@ function initMessageBoard() {
                     localStorage.setItem('msgLastSend', Date.now().toString());
                     textarea.value = '';
                     countEl.textContent = '0/50';
-                    submitBtn.textContent = '留言成功，30秒后可继续留言';
                     startRateLimitCountdown();
                 } else {
                     alert(data.message || '发送失败');
@@ -1303,25 +1294,28 @@ function initMessageBoard() {
             localStorage.setItem('msgLastSend', Date.now().toString());
             textarea.value = '';
             countEl.textContent = '0/50';
-            submitBtn.textContent = '留言成功，30秒后可继续留言';
             startRateLimitCountdown();
         }
     });
 
-    // 频率限制：冷却期间按钮显示留言成功提示，30秒后恢复
+    // 频率限制：冷却期间按钮显示"留言成功，X秒后可继续留言"实时倒计时，30秒后恢复
     function startRateLimitCountdown() {
         const lastSend = parseInt(localStorage.getItem('msgLastSend') || '0');
         const elapsed = Date.now() - lastSend;
         if (elapsed < 30000) {
-            submitBtn.textContent = '留言成功，30秒后可继续留言';
+            const remain = Math.ceil((30000 - elapsed) / 1000);
+            submitBtn.textContent = '留言成功，' + remain + '秒后可继续留言';
             submitBtn.disabled = true;
             const timer = setInterval(() => {
-                if (Date.now() - lastSend >= 30000) {
+                const r = Math.ceil((30000 - (Date.now() - lastSend)) / 1000);
+                if (r <= 0) {
                     clearInterval(timer);
                     submitBtn.textContent = '发送';
                     submitBtn.disabled = false;
+                } else {
+                    submitBtn.textContent = '留言成功，' + r + '秒后可继续留言';
                 }
-            }, 500);
+            }, 1000);
         }
     }
 
