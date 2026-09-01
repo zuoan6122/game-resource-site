@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>左岸资源分享站 - 手机游戏资源下载</title>
-    <link rel="stylesheet" href="styles.css?v=30">
+    <link rel="stylesheet" href="styles.css?v=34">
 </head>
 <body class="light-theme">
     <!-- 顶部导航栏 -->
@@ -77,11 +77,11 @@
         <div class="filter-bar">
             <!-- 大分类标签页 -->
             <div class="filter-tabs">
-                <button class="filter-tab active" data-tab="game-type">游戏分类</button>
+                <button class="filter-tab active" data-tab="game-type">游戏平台</button>
                 <button class="filter-tab" data-tab="software">游戏必备软件</button>
-                <button class="filter-tab" data-tab="emulator">模拟器分类</button>
+                <button class="filter-tab" data-tab="emulator">模拟器</button>
             </div>
-            <!-- 游戏分类 -->
+            <!-- 游戏平台 -->
             <div class="filter-content active" id="tab-game-type">
                 <!-- 平台子标签 -->
                 <div class="platform-tabs">
@@ -107,6 +107,7 @@
                     <a href="#" class="filter-item" data-category="puzzle">益智</a>
                     <a href="#" class="filter-item" data-category="survival">生存</a>
                     <a href="#" class="filter-item" data-category="fighting">格斗</a>
+                    <a href="#" class="filter-item" data-category="interactive">真人互动</a>
                 </div>
                 <!-- 排序筛选 -->
                 <div class="sort-tabs">
@@ -240,9 +241,15 @@
         <div class="image-viewer-counter" id="imageViewerCounter"></div>
     </div>
 
-    <!-- 游戏数据（jsDelivr 国内快速节点，绕过 CORS；Gitee raw 因 nosniff 无法执行已弃用） -->
-    <script src="https://testingcf.jsdelivr.net/gh/zuoan6122/game-resource-site@master/games-data.js?v=1"></script>
-    <script src="script.js?v=52"></script>
+    <!-- 游戏数据（本地预览用本地文件；线上用 jsDelivr 国内快速节点，绕过 CORS） -->
+    <script>
+    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+        document.write('<script src="data/games-data.js"><\/script>');
+    } else {
+        document.write('<script src="https://testingcf.jsdelivr.net/gh/zuoan6122/game-resource-site@master/games-data.js?v=2"><\/script>');
+    }
+    </script>
+    <script src="script.js?v=54"></script>
 
     <!-- 百度统计 -->
     <script>

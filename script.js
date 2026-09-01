@@ -76,6 +76,7 @@ const pagination = document.getElementById('pagination');
 // ==================== 分类名称映射 ====================
 const categoryNames = {
     'all': '全部游戏',
+    'interactive': '真人互动',
     'strategy': '策略',
     'action': '动作',
     'adventure': '冒险',
@@ -120,7 +121,7 @@ function getScoreEmoji(score) {
 
 // ==================== 从数据源加载游戏 ====================
 // 数据版本号：games.json 更新后需 +1，以刷新 jsDelivr 与浏览器缓存
-const GAMES_DATA_VERSION = 1;
+const GAMES_DATA_VERSION = 2;
 const GAMES_DATA_URLS = [
     `data/games.json?v=${GAMES_DATA_VERSION}`,
     `https://cdn.jsdelivr.net/gh/zuoan6122/game-resource-site@master/data/games.json?v=${GAMES_DATA_VERSION}`
@@ -451,8 +452,25 @@ function handlePlatformClick(e) {
 
     currentPage = 1;
 
+    // 真人互动仅在 全部/PC 平台显示
+    updateInteractiveFilterVisibility();
+
     // 始终重新渲染（搜索时也按平台标签过滤）
     renderGames();
+}
+
+// 真人互动分类只在 全部/PC 平台可见；切到安卓/NS 时隐藏并重置分类
+function updateInteractiveFilterVisibility() {
+    const interactiveItem = document.querySelector('.filter-item[data-category="interactive"]');
+    if (!interactiveItem) return;
+    const show = currentPlatform === 'all' || currentPlatform === 'pc';
+    interactiveItem.style.display = show ? '' : 'none';
+    if (!show && currentCategory === 'interactive') {
+        currentCategory = 'all';
+        categoryItems.forEach(item => item.classList.remove('active'));
+        const allItem = document.querySelector('.filter-item[data-category="all"]');
+        if (allItem) allItem.classList.add('active');
+    }
 }
 
 // ==================== 分类切换 ====================
@@ -502,6 +520,9 @@ function resetPage() {
     // 重置游戏类型
     categoryItems.forEach(item => item.classList.remove('active'));
     categoryItems[0].classList.add('active');
+
+    // 真人互动可见性（当前平台为 all）
+    updateInteractiveFilterVisibility();
 
     // 重置排序
     document.querySelectorAll('.sort-tab').forEach(t => {
