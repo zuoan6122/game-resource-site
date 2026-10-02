@@ -2149,6 +2149,19 @@ body {
     color: var(--text-secondary);
 }
 
+.mod-video-link {
+    color: var(--accent-color);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.mod-video-link:hover {
+    color: var(--accent-hover);
+    border-bottom-color: var(--accent-hover);
+}
+
 /* 游戏Mod 常见问题提示 */
 .mod-faq {
     margin-bottom: var(--space-16);
