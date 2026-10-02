@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>左岸资源分享站 - 手机游戏资源下载</title>
-    <link rel="stylesheet" href="styles.css?v=34">
+    <link rel="stylesheet" href="styles.css?v=44">
 </head>
 <body class="light-theme">
     <!-- 顶部导航栏 -->
@@ -45,19 +45,19 @@
     <!-- 轮播推荐位 -->
     <div class="carousel-container">
         <div class="carousel">
-            <div class="carousel-slide active" style="background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);">
+            <div class="carousel-slide active" style="background: #4F46E5;">
                 <div class="carousel-content">
                     <h2>📱 安卓游戏</h2>
                     <p>千款安卓手游免费下载，即点即玩</p>
                 </div>
             </div>
-            <div class="carousel-slide" style="background: linear-gradient(135deg, #b91c1c 0%, #ef4444 100%);">
+            <div class="carousel-slide" style="background: #7C3AED;">
                 <div class="carousel-content">
                     <h2>🎮 NS 游戏</h2>
                     <p>Switch 主机大作合集，畅玩无忧</p>
                 </div>
             </div>
-            <div class="carousel-slide" style="background: linear-gradient(135deg, #8a3a1f 0%, #e8590c 100%);">
+            <div class="carousel-slide" style="background: #0E7490;">
                 <div class="carousel-content">
                     <h2>🖥️ PC 游戏</h2>
                     <p>高分 PC 单机大作，一键转存下载</p>
@@ -71,7 +71,7 @@
         <!-- 资源来源提示 -->
         <div class="source-notice">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-            <span>目前所有资源均来自夸克网盘，点击跳转按钮即可跳转到网盘链接</span>
+            <span class="source-notice-promo">目前所有资源均来自夸克网盘，新人手机端保存链接送1TB存储空间！</span>
         </div>
         <!-- 顶部筛选栏 -->
         <div class="filter-bar">
@@ -80,6 +80,7 @@
                 <button class="filter-tab active" data-tab="game-type">游戏平台</button>
                 <button class="filter-tab" data-tab="software">游戏必备软件</button>
                 <button class="filter-tab" data-tab="emulator">模拟器</button>
+                <button class="filter-tab" data-tab="mod">游戏Mod</button>
             </div>
             <!-- 游戏平台 -->
             <div class="filter-content active" id="tab-game-type">
@@ -166,6 +167,306 @@
                     </a>
                 </div>
             </div>
+            <!-- 游戏Mod子分类 -->
+            <div class="filter-content" id="tab-mod">
+                <div class="mod-faq">
+                    <div class="mod-faq-title">【常见问题】</div>
+                    <ol class="mod-faq-list">
+                        <li>
+                            <div class="mod-faq-q">要先解压整合包吗？</div>
+                            <div class="mod-faq-a">必须。请先解压整合包，再安装 Mod。</div>
+                        </li>
+                        <li>
+                            <div class="mod-faq-q">下载后提示病毒？</div>
+                            <div class="mod-faq-a">资源均为绿色无毒，可放心使用。</div>
+                        </li>
+                        <li>
+                            <div class="mod-faq-q">解压报错（为空、无法解压、不支持等）？</div>
+                            <div class="mod-faq-a">若已安装解压软件仍报错，通常是资源未下载完整。请等网盘下载完成后再解压。</div>
+                        </li>
+                        <li>
+                            <div class="mod-faq-q">安装后游戏打不开？</div>
+                            <ul class="mod-faq-sub">
+                                <li>先查看整合包内的解决方案。</li>
+                                <li>若打不开或闪退：多数是未按步骤安装，删除后重装；少数是 Mod 更新导致，替换为新版本即可。</li>
+                                <li>确保显卡驱动最新，且游戏版本与整合包版本匹配。</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+                <div class="emulator-list">
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">艾尔登法环Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_aiderdengfahuan.png" alt="艾尔登法环Mod网盘二维码">
+                                    <div class="mod-qr-caption">艾尔登法环Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">GTA5Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_gta5.png" alt="GTA5Mod网盘二维码">
+                                    <div class="mod-qr-caption">GTA5Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">怪物猎人 荒野Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_guaiwulierenhuangye.png" alt="怪物猎人 荒野Mod网盘二维码">
+                                    <div class="mod-qr-caption">怪物猎人 荒野Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">鬼谷八荒Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_guigubahuang.png" alt="鬼谷八荒Mod网盘二维码">
+                                    <div class="mod-qr-caption">鬼谷八荒Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">黑神话Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_heishenhua.png" alt="黑神话Mod网盘二维码">
+                                    <div class="mod-qr-caption">黑神话Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">幻兽帕鲁Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_huanshoupalu.png" alt="幻兽帕鲁Mod网盘二维码">
+                                    <div class="mod-qr-caption">幻兽帕鲁Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">荒野大镖客2Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_huangyedabiaoke2.png" alt="荒野大镖客2Mod网盘二维码">
+                                    <div class="mod-qr-caption">荒野大镖客2Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">霍格沃茨之遗Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_huogewocizhiyi.png" alt="霍格沃茨之遗Mod网盘二维码">
+                                    <div class="mod-qr-caption">霍格沃茨之遗Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">剑星Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_jianxing.png" alt="剑星Mod网盘二维码">
+                                    <div class="mod-qr-caption">剑星Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">明末渊虚之羽Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_mingmoyuanxuzhiyu.png" alt="明末渊虚之羽Mod网盘二维码">
+                                    <div class="mod-qr-caption">明末渊虚之羽Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">赛博朋克2077Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_saibopengke2077.png" alt="赛博朋克2077Mod网盘二维码">
+                                    <div class="mod-qr-caption">赛博朋克2077Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">生化危机4 重置版Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_shenghuaweiji4.png" alt="生化危机4 重置版Mod网盘二维码">
+                                    <div class="mod-qr-caption">生化危机4 重置版Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">生化危机9 安魂曲Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_shenghuaweiji9.png" alt="生化危机9 安魂曲Mod网盘二维码">
+                                    <div class="mod-qr-caption">生化危机9 安魂曲Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">天国拯救2Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_tianguozhengjiu2.png" alt="天国拯救2Mod网盘二维码">
+                                    <div class="mod-qr-caption">天国拯救2Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-item">
+                        <button type="button" class="mod-toggle" aria-expanded="false">
+                            <span class="emulator-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1 -3.923 -2.035l1.634 -8.173a5 5 0 0 1 4.904 -4.019h3.4"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925 -2.023l-1.6 -8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></svg></span>
+                            <span class="emulator-name">巫师三重置版Mod</span>
+                            <span class="emulator-arrow">点击获取Mod链接 <svg class="mod-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <div class="mod-dropdown">
+                            <div class="mod-dropdown-inner">
+                                <div class="mod-half">
+                                    <img class="mod-qr" src="images/qrcodes/mod_wushisan.png" alt="巫师三重置版Mod网盘二维码">
+                                    <div class="mod-qr-caption">巫师三重置版Mod网盘二维码</div>
+                                </div>
+                                <div class="mod-half">
+                                    <div class="mod-video">视频教程：</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- 游戏网格 -->
@@ -188,7 +489,7 @@
     <!-- 右侧浮动按钮：留言 + 主题切换 + 返回顶部 -->
     <div class="floating-buttons">
         <div class="message-board collapsed" id="messageBoard">
-            <div class="msg-hint" id="msgHint">游戏荒？留言告诉我们</div>
+            <div class="msg-hint" id="msgHint">游戏荒？使用中遇到问题？留言告诉我们</div>
             <button class="msg-board-tab" id="msgBoardTab" title="留言" aria-label="留言">
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
             </button>
@@ -201,7 +502,7 @@
                 </div>
                 <div class="msg-board-form">
                     <div class="msg-board-textarea-wrap">
-                        <textarea id="msgBoardContent" placeholder="游戏荒？留言告诉我们" maxlength="50" class="msg-board-textarea" rows="3"></textarea>
+                        <textarea id="msgBoardContent" placeholder="游戏荒？使用中遇到问题？留言告诉我们" maxlength="50" class="msg-board-textarea" rows="3"></textarea>
                         <div class="msg-board-count" id="msgBoardCount">0/50</div>
                     </div>
                     <button id="msgBoardSubmit" class="msg-board-submit">发送</button>
@@ -249,7 +550,7 @@
         document.write('<script src="https://gcore.jsdelivr.net/gh/zuoan6122/game-resource-site@bbab29fd7f1e3f9619f1334b797626babd9ae5ee/games-data.js"><\/script>');
     }
     </script>
-    <script src="script.js?v=57"></script>
+    <script src="script.js?v=59"></script>
 
     <!-- 百度统计 -->
     <script>

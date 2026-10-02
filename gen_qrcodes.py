@@ -35,9 +35,9 @@ for game in games:
     referenced.add(fname)
     count += 1
 
-# 删除未被 PC 游戏引用的多余二维码文件
+# 删除未被 PC 游戏引用的多余二维码文件（mod_ 前缀为「游戏Mod」栏目专用，保留）
 for f in os.listdir(QR_DIR):
-    if f not in referenced:
+    if f not in referenced and not f.startswith('mod_'):
         os.remove(os.path.join(QR_DIR, f))
 
 with open(DATA, 'w', encoding='utf-8') as f:

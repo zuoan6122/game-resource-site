@@ -947,6 +947,16 @@ function bindEvents() {
         });
     });
 
+    // 游戏Mod 栏目 - 点击展开/收起二维码下拉
+    document.querySelectorAll('.mod-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.mod-item');
+            if (!item) return;
+            const open = item.classList.toggle('open');
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+    });
+
     // 平台子标签
     document.querySelectorAll('.platform-tab').forEach(tab => {
         tab.addEventListener('click', handlePlatformClick);
@@ -1220,7 +1230,7 @@ function initMessageBoard() {
     const submitBtn = document.getElementById('msgBoardSubmit');
     const hint = document.getElementById('msgHint');
 
-    // 提示气泡：页面加载自动闪烁 3s 后隐藏；悬停显示（不闪烁），移开隐藏
+    // 提示气泡：页面加载自动闪烁 5s 后隐藏；悬停显示（不闪烁），移开隐藏
     let hintTimer;
     function showHint(blink) {
         clearTimeout(hintTimer);
@@ -1232,7 +1242,7 @@ function initMessageBoard() {
         hint.classList.remove('show', 'blink');
     }
     showHint(true);
-    hintTimer = setTimeout(hideHint, 3000);
+    hintTimer = setTimeout(hideHint, 5000);
     tab.addEventListener('mouseenter', () => showHint(false));
     tab.addEventListener('mouseleave', hideHint);
 
