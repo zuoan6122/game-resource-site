@@ -2104,26 +2104,15 @@ body {
 
 .mod-dropdown-inner {
     display: flex;
-    align-items: stretch;
-    margin: 0 var(--space-16) var(--space-16);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-}
-
-.mod-half {
-    flex: 1;
-    min-width: 0;
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: var(--space-8);
     padding: var(--space-16);
-}
-
-.mod-half + .mod-half {
-    border-left: 1px solid var(--border-color);
+    margin: 0 var(--space-16) var(--space-16);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
 }
 
 .mod-qr {
@@ -2142,24 +2131,6 @@ body {
     color: var(--text-secondary);
     text-align: center;
     opacity: 0.7;
-}
-
-.mod-video {
-    font-size: 13px;
-    color: var(--text-secondary);
-}
-
-.mod-video-link {
-    color: var(--accent-color);
-    font-weight: 600;
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: color 0.2s, border-color 0.2s;
-}
-
-.mod-video-link:hover {
-    color: var(--accent-hover);
-    border-bottom-color: var(--accent-hover);
 }
 
 /* 游戏Mod 常见问题提示 */
