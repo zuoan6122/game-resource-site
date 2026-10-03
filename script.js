@@ -121,7 +121,7 @@ function getScoreEmoji(score) {
 
 // ==================== 从数据源加载游戏 ====================
 // 数据版本号：games.json 更新后需 +1，以刷新 jsDelivr 与浏览器缓存
-const GAMES_DATA_VERSION = 4;
+const GAMES_DATA_VERSION = 5;
 const GAMES_DATA_URLS = [
     `data/games.json?v=${GAMES_DATA_VERSION}`,
     `https://cdn.jsdelivr.net/gh/zuoan6122/game-resource-site@2827f5cfbaf2c564094677e8084963d8ca4d94f7/data/games.json?v=${GAMES_DATA_VERSION}`
